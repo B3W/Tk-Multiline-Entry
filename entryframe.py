@@ -32,3 +32,31 @@ class EntryFrame(ttk.Frame):
         self.entry.configure(yscrollcommand=self.vsb.set)
 
         self.bind('<Configure>', self.entry.on_configure)
+        self.entry.bind('<Return>', self.__on_enter)
+        self.entry.bind('<Shift-Return>', self.__on_newline)
+
+    def get(self):
+        '''Returns contents of the entry'''
+        return self.entry.get(1.0, 'end-1c')
+
+    def clear(self):
+        '''Clears contents of the entry'''
+        self.entry.delete(1.0, tk.END)
+
+    def focus(self):
+        '''Sets application focus to the entry area'''
+        self.entry.focus_set()
+
+    # CALLBACKS
+    def __on_enter(self, event):
+        '''Handler for <Return> event'''
+        # Generate <<Send>> event when enter key pressed
+        self.event_generate('<<Send>>')
+
+        # Stop propagation of event to prevent newline
+        return 'break'
+
+    def __on_newline(self, event):
+        '''Handler for <Shift-Return> event'''
+        # Ignore the event to allow for newlines
+        pass
