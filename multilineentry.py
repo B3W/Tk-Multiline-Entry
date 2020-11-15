@@ -1,7 +1,6 @@
 import tkinter as tk
 
 
-# class MultilineEntry(ttk.Frame) ?
 class MultilineEntry(tk.Text):
     '''UI element providing multiline user entry'''
     def __init__(self, master, max_lines, *args, **kwargs):
